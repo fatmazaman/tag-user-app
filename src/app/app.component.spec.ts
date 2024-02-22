@@ -30,11 +30,9 @@ describe('AppComponent', () => {
   })
 
   it('should add a comment', () => {
-    // Set up test data
     const commentText = 'Test comment'
     const initialCommentsLength = component.comments.length
 
-    // Simulate adding a comment
     component.newCommentText = commentText
     component.onAddComment()
 
@@ -45,24 +43,20 @@ describe('AppComponent', () => {
   })
 
   it('should select a user', () => {
-    // Set up test data
     const user = { userID: 1, name: 'TestUser' }
-
-    // Simulate selecting a user
+    component.newCommentText = '@'
     component.selectUser(user)
 
     // Check if the selected user is set
     expect(component.selectedUser).toEqual(user)
+    expect(component.newCommentText).toContain(`@${user.name}`)
     expect(component.showDropdown).toBeFalse()
   })
-
   it('should handle keyup event', () => {
-    // Set up test data
     const target = { value: 'test @user' }
     const keyboardEvent = new KeyboardEvent('keyup', { key: '@' })
     Object.defineProperty(keyboardEvent, 'target', { writable: false, value: target })
-  
-    // Simulate keyup event
+
     component.onInputKeyUp(keyboardEvent)
   
     // Check if dropdown is shown

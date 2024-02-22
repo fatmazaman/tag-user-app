@@ -1,8 +1,8 @@
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core'
+import { BrowserModule } from '@angular/platform-browser'
 
-import { FormsModule, ReactiveFormsModule } from '@angular/forms'; // Add ReactiveFormsModule here
-import { AppComponent } from './app.component';
+import { FormsModule } from '@angular/forms' 
+import { AppComponent } from './app.component'
 
 @NgModule({
   declarations: [
@@ -11,7 +11,6 @@ import { AppComponent } from './app.component';
   imports: [
     BrowserModule,
     FormsModule,
-    ReactiveFormsModule // And add it here
   ],
   providers: [],
   bootstrap: [AppComponent]

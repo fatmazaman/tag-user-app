@@ -1,6 +1,6 @@
 # TagUserApp
 
-a simple Angular (latest) app that has this functionality:
+A simple Angular (latest) app that has this functionality:
 
 - A list of comments
 - A field that can allow people to add new comments
