@@ -73,3 +73,7 @@
   .user-dropdown li:hover {
     background-color: hsl(0, 71%, 35%)
   }
+
+  .tagged-user {
+    font-weight: bold
+  }

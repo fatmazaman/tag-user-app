@@ -65,7 +65,11 @@ export class AppComponent implements OnInit {
     this.newCommentText = this.newCommentText.replace(/@\w*$/, `@${user.name}`)
     this.showDropdown = false
     this.selectedUser = user
-    // Trim whitespace from the input field
     this.newCommentText = this.newCommentText.trim()  
+  }
+  
+  formatCommentText(text: string): string {
+    // Use regular expression to replace tagged usernames with bold format
+    return text.replace(/@(\w+)/g, '<b>@$1</b>');
   }
 }
