@@ -39,6 +39,7 @@
     padding: 5px;
     border: 1px solid #ccc;
     border-radius: 3px;
+    height: 40px;
   }
   
   .new-comment button {
