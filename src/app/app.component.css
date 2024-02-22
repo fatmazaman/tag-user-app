@@ -71,7 +71,7 @@
   }
   
   .user-dropdown li:hover {
-    background-color: hsl(0, 71%, 35%)
+    background-color: hsla(185, 88%, 35%, 0.86)
   }
 
   .tagged-user {

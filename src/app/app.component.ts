@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core'
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser'
 
 interface Comment {
   text: string
@@ -28,6 +29,8 @@ export class AppComponent implements OnInit {
   showDropdown: boolean = false
   selectedUser: User | null = null
 
+  constructor(private sanitizer: DomSanitizer) {}
+
   ngOnInit() {
     this.filteredUsers = []
     // Add click event listener to close the dropdown when clicking outside of it
@@ -45,8 +48,8 @@ export class AppComponent implements OnInit {
     this.newCommentText = ''
     this.showDropdown = false
     if (this.selectedUser) {
-      alert(`Tagged user: ${this.selectedUser.name}`)
-      this.selectedUser = null  
+      alert(`you are mentioned in a comment: ${this.selectedUser.name}`)
+      this.selectedUser = null
     }
   }
 
@@ -65,11 +68,13 @@ export class AppComponent implements OnInit {
     this.newCommentText = this.newCommentText.replace(/@\w*$/, `@${user.name}`)
     this.showDropdown = false
     this.selectedUser = user
-    this.newCommentText = this.newCommentText.trim()  
+    this.newCommentText = this.newCommentText.trim()
   }
   
-  formatCommentText(text: string): string {
+  formatAndSanitizeCommentText(text: string): SafeHtml {
     // Use regular expression to replace tagged usernames with bold format
-    return text.replace(/@(\w+)/g, '<b>@$1</b>');
+    const formattedText = text.replace(/@(\w+)/g, '<b>@$1</b>')
+    // Sanitize the formatted text
+    return this.sanitizer.bypassSecurityTrustHtml(formattedText)
   }
 }
