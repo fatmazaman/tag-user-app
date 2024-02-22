@@ -6,7 +6,12 @@
         <i class="fa fa-comment" aria-hidden="true"></i>
       </div>
       <div class="comment-content">
-        <p [innerHTML]="formatCommentText(comment.text)"></p>
+        <!-- <p [innerHTML]="formatCommentText(comment.text)"></p> -->
+        <p *ngIf="comment.text | splitComment as parts">
+          {{ parts.beforeTag }}
+          <span class="tagged-user">{{ parts.taggedUser }}</span>
+          {{ parts.afterTag }}
+        </p>
         <span class="comment-timestamp">{{ comment.timestamp | date:'medium' }}</span>
       </div>
     </li>
