@@ -38,7 +38,6 @@ export class AppComponent implements OnInit {
       this.showDropdown = false
     })
   }
-
   onAddComment() {
     const newComment: Comment = {
       text: this.newCommentText,
@@ -47,9 +46,12 @@ export class AppComponent implements OnInit {
     this.comments.push(newComment)
     this.newCommentText = ''
     this.showDropdown = false
-    if (this.selectedUser) {
-      alert(`you are mentioned in a comment: ${this.selectedUser.name}`)
-      this.selectedUser = null
+    const selectedUserName = this.selectedUser ? this.selectedUser.name : null
+    this.selectedUser = null
+    if (selectedUserName) {
+      setTimeout(() => {
+        alert(`you are mentioned in a comment: ${selectedUserName}`)
+      }, 0)
     }
   }
 
