@@ -28,6 +28,7 @@ export class AppComponent implements OnInit {
   newCommentText: string = ''
   showDropdown: boolean = false
   selectedUser: User | null = null
+  notifications: string[] = []
 
   constructor(private sanitizer: DomSanitizer) {}
 
@@ -48,11 +49,16 @@ export class AppComponent implements OnInit {
     this.showDropdown = false
     const selectedUserName = this.selectedUser ? this.selectedUser.name : null
     this.selectedUser = null
-    if (selectedUserName) {
-      setTimeout(() => {
-        alert(`you are mentioned in a comment: ${selectedUserName}`)
-      }, 0)
-    }
+    // Extract all mentioned usernames from the comment text
+    const mentionedUsernames = newComment.text.match(/@(\w+)/g)?.map(u => u.slice(1)) || []
+
+    // For each mentioned username, check if it corresponds to a user and add a notification
+    mentionedUsernames.forEach(username => {
+      const user = this.users.find(u => u.name === username)
+      if (user) {
+        this.notifications.push(`you are mentioned in a comment: ${username}`) 
+      }
+    })
   }
 
   onInputKeyUp(event: KeyboardEvent) {
