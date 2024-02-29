@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core'
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser'
+import { MatSnackBar } from '@angular/material/snack-bar'
+
 
 interface Comment {
   text: string
@@ -29,7 +31,7 @@ export class AppComponent implements OnInit {
   showDropdown: boolean = false
   selectedUser: User | null = null
 
-  constructor(private sanitizer: DomSanitizer) {}
+  constructor(private sanitizer: DomSanitizer, private snackBar: MatSnackBar) {}
 
   ngOnInit() {
     this.filteredUsers = []
@@ -48,11 +50,20 @@ export class AppComponent implements OnInit {
     this.showDropdown = false
     const selectedUserName = this.selectedUser ? this.selectedUser.name : null
     this.selectedUser = null
-    if (selectedUserName) {
-      setTimeout(() => {
-        alert(`you are mentioned in a comment: ${selectedUserName}`)
-      }, 0)
-    }
+   // Extract all mentioned usernames from the comment text
+    const mentionedUsernames = newComment.text.match(/@(\w+)/g)?.map(u => u.slice(1)) || []
+
+    // For each mentioned username, check if it corresponds to a user and show a snackbar
+    mentionedUsernames.forEach((username, index) => {
+      const user = this.users.find(u => u.name === username)
+      if (user) {
+        setTimeout(() => {
+          this.snackBar.open(`you are mentioned in a comment: ${username}`, 'Close', {
+            duration: 1000, // Snackbar will be automatically dismissed after 1 second
+          })
+        }, index * 1100); // Add a delay to each snackbar
+      }
+    })
   }
 
   onInputKeyUp(event: KeyboardEvent) {
@@ -80,3 +91,5 @@ export class AppComponent implements OnInit {
     return this.sanitizer.bypassSecurityTrustHtml(formattedText)
   }
 }
+
+
